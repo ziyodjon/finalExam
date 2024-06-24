@@ -7,12 +7,22 @@ root.classList.add("container");
 
 const fakeData = [
   {
-    name: "Shuvkat",
+    name: "Shahzod",
     surname: "Daminov",
     lastName: "Shuvkatovich",
     contacts: {
-      phone: "79063224433",
-      email: "test@mail.ru",
+      phone: "79063224411",
+      email: "shahzod@mail.ru",
+      telegram: "@testuser",
+    },
+  },
+  {
+    name: "Shuhrat",
+    surname: "Daminov",
+    lastName: "Shuvkatovich",
+    contacts: {
+      phone: "79063224422",
+      email: "shuhrat@mail.ru",
       telegram: "@testuser",
     },
   },
@@ -22,7 +32,7 @@ const fakeData = [
     lastName: "Shuvkatovich",
     contacts: {
       phone: "79063224433",
-      email: "test@mail.ru",
+      email: "shuvkat@mail.ru",
       telegram: "@testuser",
     },
   },

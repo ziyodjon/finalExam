@@ -1,4 +1,5 @@
 export default function ClientListBox(data) {
+  console.log(data);
   const clientsListBox = document.createElement("div");
   clientsListBox.classList.add(
     "bg-white",
@@ -12,7 +13,7 @@ export default function ClientListBox(data) {
 
   const clientsFullName = document.createElement("div");
   clientsFullName.classList.add("full-name");
-  clientsFullName.textContent = "Тавров Игорь Иванович";
+  clientsFullName.textContent = `${data.surname} ${data.name} ${data.lastName}`;
 
   const clientCreatedDate = document.createElement("div");
   clientCreatedDate.classList.add("created-date");
@@ -20,11 +21,7 @@ export default function ClientListBox(data) {
 
   const clientContactsBox = document.createElement("div");
   clientContactsBox.classList.add("contacts-box");
-  const clientContactValues = {
-    phone: "+79053445566",
-    email: "test@mail.ru",
-    telegram: "@usertelegram",
-  };
+  const clientContactValues = data.contacts;
   const { phone, email, telegram } = clientContactValues;
   const clientChangeElements = `
       <p>Тел: <b>${phone}</b></p>
