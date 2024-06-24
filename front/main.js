@@ -5,38 +5,53 @@ import ClientListBox from "./components/ClientListBox.js";
 const root = document.getElementById("app");
 root.classList.add("container");
 
-const fakeData = [
-  {
-    name: "Shahzod",
-    surname: "Daminov",
-    lastName: "Shuvkatovich",
-    contacts: {
-      phone: "79063224411",
-      email: "shahzod@mail.ru",
-      telegram: "@testuser",
-    },
-  },
-  {
-    name: "Shuhrat",
-    surname: "Daminov",
-    lastName: "Shuvkatovich",
-    contacts: {
-      phone: "79063224422",
-      email: "shuhrat@mail.ru",
-      telegram: "@testuser",
-    },
-  },
-  {
-    name: "Shuvkat",
-    surname: "Daminov",
-    lastName: "Shuvkatovich",
-    contacts: {
-      phone: "79063224433",
-      email: "shuvkat@mail.ru",
-      telegram: "@testuser",
-    },
-  },
-];
+// const fakeData = [
+//   {
+//     name: "Shahzod",
+//     surname: "Daminov",
+//     lastName: "Shuvkatovich",
+//     contacts: {
+//       phone: "79063224411",
+//       email: "shahzod@mail.ru",
+//       telegram: "@testuser",
+//     },
+//   },
+//   {
+//     name: "Shuhrat",
+//     surname: "Daminov",
+//     lastName: "Shuvkatovich",
+//     contacts: {
+//       phone: "79063224422",
+//       email: "shuhrat@mail.ru",
+//       telegram: "@testuser",
+//     },
+//   },
+//   {
+//     name: "Shuvkat",
+//     surname: "Daminov",
+//     lastName: "Shuvkatovich",
+//     contacts: {
+//       phone: "79063224433",
+//       email: "shuvkat@mail.ru",
+//       telegram: "@testuser",
+//     },
+//   },
+// ];
+async function getData(url = "") {
+  // Отправка GET-запроса
+  const response = await fetch(url);
+
+  // Ожидание ответа от сервера и преобразование его в JSON
+  if (!response.ok) {
+    throw new Error("Network response was not ok " + response.statusText);
+  }
+  return response.json();
+}
+
+const url = "http://localhost:3000/api/clients";
+
+const allData = await getData(url);
+console.log(allData);
 
 const clientsCaptionsBox = document.createElement("div");
 clientsCaptionsBox.classList.add(
@@ -63,7 +78,7 @@ clientsCaptionsBox.append(
   clientContactsTitle
 );
 
-const clientsListBoxes = fakeData.map((data) => ClientListBox(data));
+const clientsListBoxes = allData.map((data) => ClientListBox(data));
 
 root.append(clientsCaptionsBox, ...clientsListBoxes);
 
@@ -75,3 +90,43 @@ root.append(clientsCaptionsBox, ...clientsListBoxes);
 //   Button("Send data", "success", { onclick: () => console.log("Clicked") }),
 //   Button("Send data", "error", { onclick: () => console.log("Clicked") }),
 // ]);
+
+// Данные, которые вы хотите отправить на сервер
+// const data = {
+//   name: "Sherozjon2",
+//   surname: "Karimov",
+//   lastName: "Shavkatovich",
+//   contacts: [
+//     {
+//       type: "phone",
+//       value: "79064445577",
+//     },
+//   ],
+// };
+
+// URL вашего API, куда вы хотите отправить данные
+//const url = "http://localhost:3000/api/clients ";
+
+// Функция для отправки данных
+// async function postData(url = "", data = {}) {
+//   // Параметры запроса
+//   const response = await fetch(url, {
+//     method: "POST", // Метод запроса
+//     headers: {
+//       "Content-Type": "application/json", // Заголовок для указания типа контента
+//     },
+//     body: JSON.stringify(data), // Преобразование данных в JSON-строку
+//   });
+
+//   // Ожидание ответа от сервера
+//   return response.json(); // Преобразование ответа в JSON
+// }
+
+// Вызов функции и обработка ответа
+// postData(url, data)
+//   .then((response) => {
+//     console.log("Success:", response); // Обработка успешного ответа
+//   })
+//   .catch((error) => {
+//     console.error("Error:", error); // Обработка ошибок
+//   });

@@ -1,5 +1,4 @@
 export default function ClientListBox(data) {
-  console.log(data);
   const clientsListBox = document.createElement("div");
   clientsListBox.classList.add(
     "bg-white",
@@ -21,14 +20,17 @@ export default function ClientListBox(data) {
 
   const clientContactsBox = document.createElement("div");
   clientContactsBox.classList.add("contacts-box");
-  const clientContactValues = data.contacts;
-  const { phone, email, telegram } = clientContactValues;
-  const clientChangeElements = `
-      <p>Тел: <b>${phone}</b></p>
-      <p>E-mail: <b>${email}</b></p>
-      <p>Телеграм: <b>${telegram}</b></p>
-    `;
-  clientContactsBox.innerHTML = clientChangeElements;
+  // const clientContactValues = data.contacts;
+  // const { phone, email, telegram } = clientContactValues;
+  // const clientChangeElements = `
+  //     <p>Тел: <b>${phone}</b></p>
+  //     <p>E-mail: <b>${email}</b></p>
+  //     <p>Телеграм: <b>${telegram}</b></p>
+  //   `;
+  // clientContactsBox.innerHTML = clientChangeElements;
+  data.contacts.forEach((element) => {
+    console.log(element);
+  });
   const clientChangeBtnsBox = document.createElement("div");
   clientChangeBtnsBox.classList.add(
     "change-btn-box",
