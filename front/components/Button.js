@@ -1,4 +1,4 @@
-import { cn } from "../utils";
+// import { cn } from "../utils";
 
 export const Button = (text, type = "success", props) => {
   const btn = document.createElement("button");

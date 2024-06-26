@@ -1,1 +1,51 @@
-[{"name":"Sherozjon","surname":"Karimov","lastName":"Shavkatovich","contacts":[],"id":"1719243631909","updatedAt":"2024-06-24T15:40:31.909Z","createdAt":"2024-06-24T15:40:31.909Z"},{"name":"Sherozjon","surname":"Karimov","lastName":"Shavkatovich","contacts":[],"id":"1719243662696","updatedAt":"2024-06-24T15:41:02.696Z","createdAt":"2024-06-24T15:41:02.696Z"},{"name":"Sherozjon","surname":"Karimov","lastName":"Shavkatovich","contacts":[{"type":"phone","value":"79064445566"}],"id":"1719243768533","updatedAt":"2024-06-24T15:42:48.533Z","createdAt":"2024-06-24T15:42:48.533Z"},{"name":"Sherozjon2","surname":"Karimov","lastName":"Shavkatovich","contacts":[{"type":"phone","value":"79064445566"}],"id":"1719243771803","updatedAt":"2024-06-24T15:42:51.803Z","createdAt":"2024-06-24T15:42:51.803Z"},{"name":"Sherozjon2","surname":"Karimov","lastName":"Shavkatovich","contacts":[{"type":"phone","value":"79064445577"}],"id":"1719243860829","updatedAt":"2024-06-24T15:44:20.829Z","createdAt":"2024-06-24T15:44:20.829Z"}]
+[
+  {
+    "name": "Sherozjon",
+    "surname": "Karimov",
+    "lastName": "Shavkatovich",
+    "contacts": [],
+    "id": "1719243631909",
+    "updatedAt": "2024-06-24T15:40:31.909Z",
+    "createdAt": "2024-06-24T15:40:31.909Z"
+  },
+  {
+    "name": "Sherozjon",
+    "surname": "Karimov",
+    "lastName": "Shavkatovich",
+    "contacts": [],
+    "id": "1719243662696",
+    "updatedAt": "2024-06-24T15:41:02.696Z",
+    "createdAt": "2024-06-24T15:41:02.696Z"
+  },
+  {
+    "name": "Sherozjon",
+    "surname": "Karimov",
+    "lastName": "Shavkatovich",
+    "contacts": [
+      { "type": "phone", "value": "79064445566" },
+      { "type": "email", "value": "shavkat@mail.ru" },
+      { "type": "telegram", "value": "@shavkatjon" }
+    ],
+    "id": "1719243768533",
+    "updatedAt": "2024-06-24T15:42:48.533Z",
+    "createdAt": "2024-06-24T15:42:48.533Z"
+  },
+  {
+    "name": "Sherozjon2",
+    "surname": "Karimov",
+    "lastName": "Shavkatovich",
+    "contacts": [{ "type": "phone", "value": "79064445566" }],
+    "id": "1719243771803",
+    "updatedAt": "2024-06-24T15:42:51.803Z",
+    "createdAt": "2024-06-24T15:42:51.803Z"
+  },
+  {
+    "name": "Sherozjon2",
+    "surname": "Karimov",
+    "lastName": "Shavkatovich",
+    "contacts": [{ "type": "phone", "value": "79064445577" }],
+    "id": "1719243860829",
+    "updatedAt": "2024-06-24T15:44:20.829Z",
+    "createdAt": "2024-06-24T15:44:20.829Z"
+  }
+]

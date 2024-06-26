@@ -1,4 +1,9 @@
+import GetNormalDate from "./GetNormalDate.js";
+import CreateModalWindow from "./CreateModalWindow.js";
+
 export default function ClientListBox(data) {
+  const normalDate = GetNormalDate(data.createdAt);
+
   const clientsListBox = document.createElement("div");
   clientsListBox.classList.add(
     "bg-white",
@@ -16,7 +21,7 @@ export default function ClientListBox(data) {
 
   const clientCreatedDate = document.createElement("div");
   clientCreatedDate.classList.add("created-date");
-  clientCreatedDate.textContent = "13.01.2024";
+  clientCreatedDate.textContent = normalDate;
 
   const clientContactsBox = document.createElement("div");
   clientContactsBox.classList.add("contacts-box");
@@ -29,7 +34,17 @@ export default function ClientListBox(data) {
   //   `;
   // clientContactsBox.innerHTML = clientChangeElements;
   data.contacts.forEach((element) => {
-    console.log(element);
+    switch (element.type) {
+      case "phone":
+        clientContactsBox.innerHTML += `<div>Тел:  <b>${element.value}</b></div>`;
+        break;
+      case "email":
+        clientContactsBox.innerHTML += `<div>E-mail:  <b>${element.value}</b></div>`;
+        break;
+      case "telegram":
+        clientContactsBox.innerHTML += `<div>Телеграм: <b>${element.value}</b></div>`;
+        break;
+    }
   });
   const clientChangeBtnsBox = document.createElement("div");
   clientChangeBtnsBox.classList.add(
@@ -49,6 +64,7 @@ export default function ClientListBox(data) {
     "px-5"
   );
   clientEditBtn.textContent = "Изменить";
+
   const clientDeleteBtn = document.createElement("button");
   clientDeleteBtn.classList.add(
     "text-white",
@@ -58,6 +74,10 @@ export default function ClientListBox(data) {
     "px-5"
   );
   clientDeleteBtn.textContent = "Удалить";
+
+  clientEditBtn.addEventListener("click", () => {
+    CreateModalWindow(true, "edit");
+  });
 
   clientChangeBtnsBox.append(clientEditBtn, clientDeleteBtn);
 

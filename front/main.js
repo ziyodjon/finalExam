@@ -1,42 +1,29 @@
 import "./style.css";
 import ClientListBox from "./components/ClientListBox.js";
-//import { Button } from "./components";
+import CreateModalWindow from "./components/CreateModalWindow.js";
 
 const root = document.getElementById("app");
 root.classList.add("container");
 
-// const fakeData = [
-//   {
-//     name: "Shahzod",
-//     surname: "Daminov",
-//     lastName: "Shuvkatovich",
-//     contacts: {
-//       phone: "79063224411",
-//       email: "shahzod@mail.ru",
-//       telegram: "@testuser",
-//     },
-//   },
-//   {
-//     name: "Shuhrat",
-//     surname: "Daminov",
-//     lastName: "Shuvkatovich",
-//     contacts: {
-//       phone: "79063224422",
-//       email: "shuhrat@mail.ru",
-//       telegram: "@testuser",
-//     },
-//   },
-//   {
-//     name: "Shuvkat",
-//     surname: "Daminov",
-//     lastName: "Shuvkatovich",
-//     contacts: {
-//       phone: "79063224433",
-//       email: "shuvkat@mail.ru",
-//       telegram: "@testuser",
-//     },
-//   },
-// ];
+const footer = document.createElement("div");
+footer.classList.add("footer", "flex", "justify-center", "my-10");
+
+const addClientBtn = document.createElement("button");
+addClientBtn.classList.add(
+  "text-white",
+  "bg-[#169d1c]",
+  "rounded-full",
+  "py-2",
+  "px-20"
+);
+addClientBtn.textContent = "Добавить клиента";
+
+addClientBtn.addEventListener("click", () => {
+  CreateModalWindow(true);
+});
+
+footer.append(addClientBtn);
+
 async function getData(url = "") {
   // Отправка GET-запроса
   const response = await fetch(url);
@@ -51,7 +38,6 @@ async function getData(url = "") {
 const url = "http://localhost:3000/api/clients";
 
 const allData = await getData(url);
-console.log(allData);
 
 const clientsCaptionsBox = document.createElement("div");
 clientsCaptionsBox.classList.add(
@@ -65,11 +51,11 @@ clientsCaptionsBox.classList.add(
 const clientFioTitle = document.createElement("h6");
 clientFioTitle.classList.add("px-10");
 clientFioTitle.textContent = "ФИО";
+
 const clientCreatedDateTitle = document.createElement("h6");
 clientCreatedDateTitle.textContent = "Дата создания";
-//clientCreatedDateTitle.classList.add("w-1/3");
+
 const clientContactsTitle = document.createElement("h6");
-//clientContactsTitle.classList.add("w-1/3");
 clientContactsTitle.textContent = "Контакты";
 
 clientsCaptionsBox.append(
@@ -80,29 +66,7 @@ clientsCaptionsBox.append(
 
 const clientsListBoxes = allData.map((data) => ClientListBox(data));
 
-root.append(clientsCaptionsBox, ...clientsListBoxes);
-
-// HTMLElement.prototype.add = function (children = []) {
-//   children.forEach((child) => this.appendChild(child));
-// };
-
-// root.add([
-//   Button("Send data", "success", { onclick: () => console.log("Clicked") }),
-//   Button("Send data", "error", { onclick: () => console.log("Clicked") }),
-// ]);
-
-// Данные, которые вы хотите отправить на сервер
-// const data = {
-//   name: "Sherozjon2",
-//   surname: "Karimov",
-//   lastName: "Shavkatovich",
-//   contacts: [
-//     {
-//       type: "phone",
-//       value: "79064445577",
-//     },
-//   ],
-// };
+root.append(clientsCaptionsBox, ...clientsListBoxes, footer);
 
 // URL вашего API, куда вы хотите отправить данные
 //const url = "http://localhost:3000/api/clients ";
@@ -130,3 +94,36 @@ root.append(clientsCaptionsBox, ...clientsListBoxes);
 //   .catch((error) => {
 //     console.error("Error:", error); // Обработка ошибок
 //   });
+
+// const addContactBtn = document.querySelector(".addContactsBtn");
+// addContactBtn.addEventListener("click", (e) => {
+//   const addContactsItems = document.querySelectorAll(".addContactsItems");
+//   const addContactsArea = document.querySelector(".addContactsArea");
+//   const newEl = document.createElement("div");
+//   newEl.innerHTML = `<div
+//                 class="addContactsItems flex justify-between gap-1 my-[10px]"
+//               >
+//                 <select
+//                   name="types"
+//                   id=""
+//                   class="bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[162px]"
+//                 >
+//                   <option value="phone">phone</option>
+//                   <option value="email">email</option>
+//                   <option value="telegram">telegram</option>
+//                 </select>
+//                 <input
+//                   type="text"
+//                   placeholder="Выберите ответ"
+//                   class="bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[268px]"
+//                 />
+//                 <button class="delContactItem">
+//                   <i
+//                     class="fa fa-trash-o text-[#484848] text-[20px]"
+//                     aria-hidden="true"
+//                   ></i>
+//                 </button>
+//               </div>`;
+//   addContactsArea.append(newEl);
+//   console.log(addContactsItems);
+// });

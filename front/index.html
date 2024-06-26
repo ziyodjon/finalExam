@@ -4,11 +4,268 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/javascript.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+    />
 
     <title>Vite App</title>
   </head>
-  <body>
+  <body id="root">
     <div id="app"></div>
     <script type="module" src="/main.js"></script>
+
+    <!-- <div class="modal flex justify-center items-center hide" id="my-modal">
+      <div
+        class="modal__box w-[545px] min-h-[380px] bg-white rounded-[30px] flex flex-col justify-between"
+      >
+        <div class="modal__header flex justify-between px-[30px] py-[20px]">
+          <h2>Создания клиента</h2>
+          <button class="close__btn">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="modal__body px-[30px]">
+          <form action="" class="flex flex-col gap-3">
+            <input
+              type="text"
+              name="name"
+              placeholder="Имя"
+              class="bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[100%]"
+            />
+            <input
+              type="text"
+              name="surname"
+              placeholder="Фамилия"
+              class="bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[100%]"
+            />
+            <input
+              type="text"
+              name="lastname"
+              placeholder="Отчество"
+              class="bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[100%]"
+            />
+          </form>
+          <div class="addContactsArea">area</div>
+          <div class="addClientBtnWrap flex justify-center py-[20px]">
+            <button
+              class="addContacts_btn text-white bg-[#0086B0] rounded-full py-3 px-10"
+            >
+              Добавить контакт
+            </button>
+          </div>
+        </div>
+        <div class="modal__footer">
+          <button
+            class="save_btn w-[100%] text-white bg-[#169d1c] rounded-b-[30px] rounded-tl-[0px] rounded-tr-[0px] py-3 px-10"
+          >
+            Сохранить
+          </button>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- <div class="modal flex justify-center items-center hide" id="my-modal2">
+      <div
+        class="modal__box w-[545px] min-h-[380px] bg-white rounded-[30px] flex flex-col justify-between"
+      >
+        <div class="modal__header flex justify-between px-[30px] py-[20px]">
+          <h2>Создания клиента</h2>
+          <button class="close__btn">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="modal__body px-[30px]">
+          <form action="" class="flex flex-col gap-2">
+            <input
+              type="text"
+              name="name"
+              placeholder="Имя"
+              class="bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[100%]"
+            />
+            <input
+              type="text"
+              name="surname"
+              placeholder="Фамилия"
+              class="bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[100%]"
+            />
+            <input
+              type="text"
+              name="lastname"
+              placeholder="Отчество"
+              class="bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[100%]"
+            />
+            <div class="addContactsArea">
+              <div
+                class="addContactsItems flex justify-between gap-1 my-[10px]"
+              >
+                <select
+                  name="types"
+                  id=""
+                  class="bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[162px]"
+                >
+                  <option value="phone">phone</option>
+                  <option value="email">email</option>
+                  <option value="telegram">telegram</option>
+                </select>
+                <input
+                  type="text"
+                  placeholder="Выберите ответ"
+                  class="bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[268px]"
+                />
+                <button class="delContactItem">
+                  <i
+                    class="fa fa-trash text-[20px] text-[#484848]"
+                    aria-hidden="true"
+                  ></i>
+                </button>
+              </div>
+
+              <div
+                class="addContactsItems flex justify-between gap-1 my-[10px]"
+              >
+                <select
+                  name="types"
+                  id=""
+                  class="bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[162px]"
+                >
+                  <option value="phone">phone</option>
+                  <option value="email">email</option>
+                  <option value="telegram">telegram</option>
+                </select>
+                <input
+                  type="text"
+                  placeholder="Выберите ответ"
+                  class="bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[268px]"
+                />
+                <button class="delContactItem">
+                  <i class="fa fa-trash text-[20px]" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div class="addClientBtnWrap flex justify-center">
+              <button
+                class="addContacts_btn text-white bg-[#0086B0] rounded-full my-[25px] py-2 px-10"
+              >
+                Добавить контакт
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="modal__footer">
+          <button
+            class="save_btn w-[100%] text-white bg-[#169d1c] rounded-b-[30px] rounded-tl-[0px] rounded-tr-[0px] py-3 px-10"
+          >
+            Сохранить
+          </button>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- <div class="modal flex justify-center items-center" id="my-modal3">
+      <div
+        class="modal__box w-[545px] min-h-[380px] bg-white rounded-[30px] flex flex-col justify-between"
+      >
+        <div class="modal__header flex justify-between px-[30px] py-[20px]">
+          <h2>Создания клиента</h2>
+          <button class="close__btn">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="modal__body px-[30px]">
+          <form id="contact-form" action="" class="flex flex-col gap-2">
+            <input
+              type="text"
+              name="name"
+              placeholder="Имя"
+              class="bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[100%]"
+            />
+            <input
+              type="text"
+              name="surname"
+              placeholder="Фамилия"
+              class="bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[100%]"
+            />
+            <input
+              type="text"
+              name="lastname"
+              placeholder="Отчество"
+              class="bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[100%]"
+            />
+            <div class="addContactsArea">
+              <div
+                class="addContactsItems flex justify-between gap-1 my-[10px]"
+              >
+                <select
+                  name="types"
+                  id=""
+                  class="bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[162px]"
+                >
+                  <option value="phone">phone</option>
+                  <option value="email">email</option>
+                  <option value="telegram">telegram</option>
+                </select>
+                <input
+                  type="text"
+                  placeholder="Выберите ответ"
+                  class="bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[268px]"
+                />
+                <button class="delContactItem">
+                  <i
+                    class="fa fa-trash-o text-[#484848] text-[20px]"
+                    aria-hidden="true"
+                  ></i>
+                </button>
+              </div>
+
+              <div
+                class="addContactsItems flex justify-between gap-1 my-[10px]"
+              >
+                <select
+                  name="types"
+                  id=""
+                  class="bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[162px]"
+                >
+                  <option value="phone">phone</option>
+                  <option value="email">email</option>
+                  <option value="telegram">telegram</option>
+                </select>
+                <input
+                  type="text"
+                  placeholder="Выберите ответ"
+                  class="bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[268px]"
+                />
+                <button class="delContactItem">
+                  <i
+                    class="fa fa-trash-o text-[#484848] text-[20px]"
+                    aria-hidden="true"
+                  ></i>
+                </button>
+              </div>
+            </div>
+          </form>
+          <div class="addClientBtnWrap flex justify-center">
+            <button
+              class="addContactsBtn text-white bg-[#0086B0] rounded-full my-[25px] py-2 px-10"
+              type="submit"
+            >
+              Добавить контакт
+            </button>
+          </div>
+        </div>
+        <div class="modal__footer flex justify-between">
+          <button
+            class="save_btn w-[100%] text-white bg-[#ee3d54] rounded-b-[30px] rounded-tl-[0px] rounded-tr-[0px] rounded-br-[0px] py-3 px-10"
+          >
+            Удалить
+          </button>
+          <button
+            class="save_btn w-[100%] text-white bg-[#00B007] rounded-b-[30px] rounded-tl-[0px] rounded-bl-[0px] rounded-tr-[0px] py-3 px-10"
+          >
+            Сохранить
+          </button>
+        </div>
+      </div>
+    </div> -->
   </body>
 </html>
