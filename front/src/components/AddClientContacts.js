@@ -1,3 +1,6 @@
+import Input from "./Input";
+import Select from "./Select.js";
+
 export default function AddClientContacts() {
   const addContactsArea = document.querySelector(".addContactsArea");
   const addContactsItems = document.createElement("div");
@@ -10,40 +13,37 @@ export default function AddClientContacts() {
     "gap-1",
     "my-[10px]"
   );
-  const addContactSelect = document.createElement("select");
-  addContactSelect.classList.add(
-    "bg-[#f2f2f2]",
-    "rounded-full",
-    "px-[30px]",
-    "py-[12px]",
-    "w-[162px]"
-  );
-  addContactsItems.setAttribute("id", unicID);
-  const options = [
-    { value: "phone", text: "Phone" },
-    { value: "emal", text: "E-mail" },
-    { value: "telegram", text: "Telegram" },
-  ];
-  options.forEach((optionData) => {
-    const option = document.createElement("option");
-    option.value = optionData.value;
-    option.text = optionData.text;
-    addContactSelect.appendChild(option);
+
+  const addContactSelect = Select({
+    className: [
+      "bg-[#f2f2f2]",
+      "rounded-full",
+      "px-[30px]",
+      "py-[12px]",
+      "w-[162px]",
+    ],
+    options: [
+      { value: "phone", text: "Phone" },
+      { value: "emal", text: "E-mail" },
+      { value: "telegram", text: "Telegram" },
+    ],
   });
 
-  const addContactInput = document.createElement("input");
-  addContactInput.type = "text";
-  addContactInput.name = "types";
-  addContactInput.placeholder = "Выберите ответ";
-  addContactInput.classList.add(
-    "bg-[#f2f2f2]",
-    "rounded-full",
-    "px-[30px]",
-    "py-[12px]",
-    "w-[268px]"
-  );
+  addContactsItems.setAttribute("id", unicID);
 
-  addContactInput.setAttribute("id", unicID);
+  const addContactInput = Input({
+    type: "text",
+    name: "lastname",
+    placeholder: "Значения контакта",
+    className: [
+      "bg-[#f2f2f2]",
+      "rounded-full",
+      "px-[30px]",
+      "py-[12px]",
+      "w-[268px]",
+    ],
+    id: unicID,
+  });
 
   const addContactDelIcon = document.createElement("i");
   addContactDelIcon.classList.add(

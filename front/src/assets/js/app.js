@@ -1,43 +1,22 @@
-import "./style.css";
-import ClientListBox from "./components/ClientListBox.js";
-import CreateModalWindow from "./components/CreateModalWindow.js";
+import "../css/style.css";
+import ClientListBox from "../../components/ClientListBox.js";
+import CreateModalWindow from "../../components/CreateModalWindow.js";
+import { create } from "../../utils/index.js";
+import { Button } from "../../components/Button.js";
+import { request } from "../../api/index.js";
 
-const root = document.getElementById("app");
-root.classList.add("container");
+const app = create("div");
 
-const footer = document.createElement("div");
-footer.classList.add("footer", "flex", "justify-center", "my-10");
+const footer = create("div", { className: "footer flex justify-center my-10" });
 
-const addClientBtn = document.createElement("button");
-addClientBtn.classList.add(
-  "text-white",
-  "bg-[#169d1c]",
-  "rounded-full",
-  "py-2",
-  "px-20"
-);
-addClientBtn.textContent = "Добавить клиента";
-
-addClientBtn.addEventListener("click", () => {
-  CreateModalWindow(true);
+const addClientBtn = Button("Добавить клиента", "success", {
+  onclick: () => CreateModalWindow(true),
+  className: "text-white py-2 px-20 hover:bg-[#157739]",
 });
 
 footer.append(addClientBtn);
 
-async function getData(url = "") {
-  // Отправка GET-запроса
-  const response = await fetch(url);
-
-  // Ожидание ответа от сервера и преобразование его в JSON
-  if (!response.ok) {
-    throw new Error("Network response was not ok " + response.statusText);
-  }
-  return response.json();
-}
-
-const url = "http://localhost:3000/api/clients";
-
-const allData = await getData(url);
+const allData = await request("clients");
 
 const clientsCaptionsBox = document.createElement("div");
 clientsCaptionsBox.classList.add(
@@ -48,14 +27,14 @@ clientsCaptionsBox.classList.add(
   "mt-5"
 );
 
-const clientFioTitle = document.createElement("h6");
+const clientFioTitle = document.createElement("button");
 clientFioTitle.classList.add("px-10");
 clientFioTitle.textContent = "ФИО";
 
-const clientCreatedDateTitle = document.createElement("h6");
+const clientCreatedDateTitle = document.createElement("button");
 clientCreatedDateTitle.textContent = "Дата создания";
 
-const clientContactsTitle = document.createElement("h6");
+const clientContactsTitle = document.createElement("div");
 clientContactsTitle.textContent = "Контакты";
 
 clientsCaptionsBox.append(
@@ -66,7 +45,8 @@ clientsCaptionsBox.append(
 
 const clientsListBoxes = allData.map((data) => ClientListBox(data));
 
-root.append(clientsCaptionsBox, ...clientsListBoxes, footer);
+app.append(clientsCaptionsBox, ...clientsListBoxes, footer);
+export default app;
 
 // URL вашего API, куда вы хотите отправить данные
 //const url = "http://localhost:3000/api/clients ";
