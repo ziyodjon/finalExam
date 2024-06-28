@@ -10,7 +10,10 @@ const app = create("div");
 const footer = create("div", { className: "footer flex justify-center my-10" });
 
 const addClientBtn = Button("Добавить клиента", "success", {
-  onclick: () => CreateModalWindow(true),
+  onclick: () => {
+    const modal = CreateModalWindow(true);
+    document.body.append(modal);
+  },
   className: "text-white py-2 px-20 hover:bg-[#157739]",
 });
 

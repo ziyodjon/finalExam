@@ -1,11 +1,9 @@
 export default function Select(props = {}) {
   const select = document.createElement("select");
 
-  if (props.className) {
-    props.className.forEach((classes) => {
-      select.classList.add(classes);
-    });
-  }
+  console.log(props);
+
+  select.className = props.className;
 
   if (props.options) {
     props.options.forEach((optionData) => {

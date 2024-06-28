@@ -4,7 +4,7 @@ import { create } from "../utils/index.js";
 import Input from "./Input.js";
 
 export default function CreateModalWindow(visibility, type) {
-  const bodyRoot = document.getElementById("root");
+  //const bodyRoot = document.getElementById("root");
 
   const modal = create("div", {
     className: "modal flex justify-center items-center hide",
@@ -46,39 +46,21 @@ export default function CreateModalWindow(visibility, type) {
     type: "text",
     name: name,
     placeholder: "Имя",
-    className: [
-      "bg-[#f2f2f2]",
-      "rounded-full",
-      "px-[30px]",
-      "py-[12px]",
-      "w-[100%]",
-    ],
+    className: "bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[100%]",
   });
 
   const modalFormInputSurname = Input({
     type: "text",
     name: "surname",
     placeholder: "Фамилия",
-    className: [
-      "bg-[#f2f2f2]",
-      "rounded-full",
-      "px-[30px]",
-      "py-[12px]",
-      "w-[100%]",
-    ],
+    className: "bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[100%]",
   });
 
   const modalFormInputLastName = Input({
     type: "text",
     name: "lastname",
     placeholder: "Отчество",
-    className: [
-      "bg-[#f2f2f2]",
-      "rounded-full",
-      "px-[30px]",
-      "py-[12px]",
-      "w-[100%]",
-    ],
+    className: "bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[100%]",
   });
 
   const addContactsArea = create("div", {
@@ -165,5 +147,6 @@ export default function CreateModalWindow(visibility, type) {
   modalHeader.append(modalCaptionText, modalCloseBtn);
   modalBox.append(modalHeader, modalBody, modalFooter);
   modal.appendChild(modalBox);
-  bodyRoot.append(modal);
+
+  return modal;
 }

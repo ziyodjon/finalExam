@@ -42,7 +42,10 @@ export default function ClientListBox(data) {
 
   clientChangeBtnsBox.append(
     Button("Изменить", "success", {
-      onclick: () => CreateModalWindow(true, "edit"),
+      onclick: () => {
+        const modal = CreateModalWindow(true, "edit");
+        document.body.append(modal);
+      },
       className: "hover:bg-[#157739]",
     }),
     Button("Удалить", "error", { className: "hover:bg-[#881c1c]" })
