@@ -1,31 +1,35 @@
 import Input from "./Input";
 import Select from "./Select.js";
-import { create } from "../utils/index.js";
+import { create, getContacts } from "../utils/index.js";
 
-export default function AddClientContacts() {
-  const addContactsArea = document.querySelector(".addContactsArea");
-  const unicID = Date.now();
+export default function AddClientContacts(CONTACTS) {
+  const length = CONTACTS.length;
 
   const addContactsItems = create("div", {
     className: "addContactsItems flex justify-between gap-1 my-[10px]",
-    id: unicID,
   });
 
   const addContactSelect = Select({
-    className: "bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[162px]",
+    className:
+      "contactTypes bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[162px]",
+    name: `contactType${length + 1}`,
+    onchange: () => {
+      const selectValue = getContacts();
+      console.log(selectValue);
+    },
     options: [
       { value: "phone", text: "Телефон" },
-      { value: "emal", text: "E-mail" },
+      { value: "email", text: "E-mail" },
       { value: "telegram", text: "Телеграм" },
     ],
   });
 
   const addContactInput = Input({
     type: "text",
-    name: "lastname",
+    name: `contactValue${length + 1}`,
     placeholder: "Значения контакта",
-    className: "bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[268px]",
-    id: unicID,
+    className:
+      "contactValue bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[268px]",
   });
 
   const addContactDelIcon = create("i", {
@@ -34,7 +38,7 @@ export default function AddClientContacts() {
 
   const addContactDelBtn = document.createElement("button");
   addContactDelBtn.classList.add("delContactItem");
-  addContactDelBtn.setAttribute("id", unicID);
+  addContactDelBtn.type = "button";
 
   addContactDelBtn.addEventListener("click", function (e) {
     if (this.parentNode.id === e.target.parentNode.id) {
@@ -45,6 +49,5 @@ export default function AddClientContacts() {
   addContactDelBtn.append(addContactDelIcon);
 
   addContactsItems.append(addContactSelect, addContactInput, addContactDelBtn);
-
-  addContactsArea.append(addContactsItems);
+  return addContactsItems;
 }

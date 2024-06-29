@@ -9,16 +9,9 @@ const types = {
 export default function ClientListBox(data) {
   const normalDate = formatDate(data.createdAt);
 
-  const clientsListBox = document.createElement("div");
-  clientsListBox.classList.add(
-    "bg-white",
-    "rounded-3xl",
-    "px-5",
-    "py-5",
-    "grid",
-    "grid-cols-4",
-    "mb-5"
-  );
+  const clientsListBox = create("div", {
+    className: "bg-white rounded-3xl px-5 py-5 grid grid-cols-4 mb-5",
+  });
 
   const clientsFullName = document.createElement("div");
   clientsFullName.classList.add("full-name");
@@ -47,8 +40,9 @@ export default function ClientListBox(data) {
         document.body.append(modal);
       },
       className: "hover:bg-[#157739]",
+      id: data.id,
     }),
-    Button("Удалить", "error", { className: "hover:bg-[#881c1c]" })
+    Button("Удалить", "error", { className: "hover:bg-[#881c1c]", id: data.id })
   );
 
   clientsListBox.append(

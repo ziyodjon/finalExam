@@ -2,10 +2,11 @@ import AddClientContacts from "./AddClientContacts.js";
 import { Button } from "./Button.js";
 import { create } from "../utils/index.js";
 import Input from "./Input.js";
+import { saveData } from "../utils/index.js";
+
+let CONTACTS = [];
 
 export default function CreateModalWindow(visibility, type) {
-  //const bodyRoot = document.getElementById("root");
-
   const modal = create("div", {
     className: "modal flex justify-center items-center hide",
     content: null,
@@ -35,32 +36,42 @@ export default function CreateModalWindow(visibility, type) {
   });
 
   const modalBody = create("div", {
-    className: "modal__body px-[30px]",
+    className: "modal__body px-[30px] flex flex-col gap-3",
   });
 
   const modalForm = create("form", {
-    className: "flex flex-col gap-3",
+    className: "modalForm",
+    id: "createForm",
   });
 
   const modalFormInputName = Input({
     type: "text",
-    name: name,
+    name: "name",
     placeholder: "Имя",
-    className: "bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[100%]",
+    required: "required",
+    id: "name",
+    className:
+      "bg-[#f2f2f2] focus:outline-none focus-visible:white border-2 border-transparent rounded-full px-[30px] py-[12px] w-[100%]",
   });
 
   const modalFormInputSurname = Input({
     type: "text",
     name: "surname",
     placeholder: "Фамилия",
-    className: "bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[100%]",
+    required: "required",
+    id: "surname",
+    className:
+      "bg-[#f2f2f2] border-2 border-transparent rounded-full px-[30px] py-[12px] w-[100%]",
   });
 
   const modalFormInputLastName = Input({
     type: "text",
     name: "lastname",
     placeholder: "Отчество",
-    className: "bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[100%]",
+    required: "required",
+    id: "lastname",
+    className:
+      "bg-[#f2f2f2] border-2 border-transparent rounded-full px-[30px] py-[12px] w-[100%]",
   });
 
   const addContactsArea = create("div", {
@@ -72,9 +83,16 @@ export default function CreateModalWindow(visibility, type) {
   });
 
   const addContactBtn = Button("Добавить контакт", "success", {
-    onclick: () => AddClientContacts(),
+    onclick: () => {
+      document
+        .querySelector(".addContactsArea")
+        .append(AddClientContacts(CONTACTS));
+      CONTACTS.push({});
+    },
+
     className:
       "addContacts_btn text-white bg-[#0086B0] rounded-full py-3 px-10 hover:bg-[#1a5b6f]",
+    type: "button",
   });
 
   const modalFooter = create("div", {
@@ -82,9 +100,52 @@ export default function CreateModalWindow(visibility, type) {
   });
 
   const modalSingleSaveBtn = Button("Сохранить", "success", {
-    onclick: () => alert("We should save"),
+    onclick: (e) => {
+      e.preventDefault();
+      const elements = document.getElementById("createForm").elements;
+
+      const formInputValues = {
+        name: elements.name.value,
+        surname: elements.surname.value,
+        lastName: elements.lastname.value,
+        contacts: CONTACTS.map((_, index) => ({
+          type: elements[`contactType${index + 1}`].value,
+          value: elements[`contactValue${index + 1}`].value,
+        })),
+      };
+
+      if (
+        formInputValues.name.length > 0 &&
+        formInputValues.surname.length > 0
+      ) {
+        const savedData = saveData(
+          "http://localhost:3000/api/clients/",
+          formInputValues
+        );
+
+        console.log(savedData);
+      }
+
+      //formInputValues.contacts.push({ type: "asdasdasd", value: "asdasd" });
+
+      // inputName.className = cn([
+      //   inputName.value.length === 0 &&
+      //     "bg-red-100 border-2 border-red-200 rounded-full px-[30px] py-[12px] w-[100%]",
+      // ]);
+
+      // inputSurName.className = cn([
+      //   inputSurName.value.length === 0 &&
+      //     "bg-red-100 border-2 border-red-200 rounded-full px-[30px] py-[12px] w-[100%]",
+      // ]);
+
+      // inputLastName.className = cn([
+      //   inputLastName.value.length === 0 &&
+      //     "bg-red-100 border-2 border-red-200 rounded-full px-[30px] py-[12px] w-[100%]",
+      // ]);
+    },
     className:
       "save_btn w-[100%] text-white bg-[#169d1c] hover:bg-[#157739] rounded-b-[30px] rounded-tl-[0px] rounded-tr-[0px] py-3 px-10",
+    type: "submit",
   });
 
   const modalDoubleDeleteBtn = Button("Удалить", "error", {
@@ -99,6 +160,7 @@ export default function CreateModalWindow(visibility, type) {
     },
     className:
       "save_btn w-[100%] text-white bg-[#00B007] rounded-b-[30px] hover:bg-[#157739] rounded-tl-[0px] rounded-bl-[0px] rounded-tr-[0px] py-3 px-10",
+    type: "submit",
   });
 
   if (visibility) {
@@ -136,17 +198,20 @@ export default function CreateModalWindow(visibility, type) {
 
   addContactBtnWrap.append(addContactBtn);
 
-  modalForm.append(
+  modalBody.append(
     modalFormInputName,
     modalFormInputSurname,
-    modalFormInputLastName
+    modalFormInputLastName,
+    addContactsArea,
+    addContactBtnWrap
   );
 
-  modalBody.append(modalForm, addContactsArea, addContactBtnWrap);
+  //modalBody.append(modalForm);
   modalCloseBtn.append(modalCloseIcon);
   modalHeader.append(modalCaptionText, modalCloseBtn);
   modalBox.append(modalHeader, modalBody, modalFooter);
-  modal.appendChild(modalBox);
+  modalForm.append(modalBox);
+  modal.appendChild(modalForm);
 
   return modal;
 }
