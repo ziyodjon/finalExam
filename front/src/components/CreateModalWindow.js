@@ -163,7 +163,7 @@ export default function CreateModalWindow(visibility, type, data = {}) {
 
   if (data.contacts.length > 0) {
     const oneClientContacts = data.contacts;
-
+    //ВОТ ТУТ ПРОБЛЕМА ))
     // console.log(oneClientContacts);
     // oneClientContacts.map((el) => {
     //   addContactsArea.append(test);
