@@ -4,7 +4,6 @@ import { create, getContacts } from "../utils/index.js";
 
 export default function AddClientContacts(CONTACTS) {
   const length = CONTACTS.length;
-
   const addContactsItems = create("div", {
     className: "addContactsItems flex justify-between gap-1 my-[10px]",
   });
@@ -15,7 +14,6 @@ export default function AddClientContacts(CONTACTS) {
     name: `contactType${length + 1}`,
     onchange: () => {
       const selectValue = getContacts();
-      console.log(selectValue);
     },
     options: [
       { value: "phone", text: "Телефон" },

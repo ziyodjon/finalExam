@@ -3,10 +3,11 @@ import { Button } from "./Button.js";
 import { create } from "../utils/index.js";
 import Input from "./Input.js";
 import { saveData } from "../utils/index.js";
+import Select from "./Select.js";
 
 let CONTACTS = [];
 
-export default function CreateModalWindow(visibility, type) {
+export default function CreateModalWindow(visibility, type, data = {}) {
   const modal = create("div", {
     className: "modal flex justify-center items-center hide",
     content: null,
@@ -47,6 +48,7 @@ export default function CreateModalWindow(visibility, type) {
   const modalFormInputName = Input({
     type: "text",
     name: "name",
+    value: data.name,
     placeholder: "Имя",
     required: "required",
     id: "name",
@@ -57,6 +59,7 @@ export default function CreateModalWindow(visibility, type) {
   const modalFormInputSurname = Input({
     type: "text",
     name: "surname",
+    value: data.surname,
     placeholder: "Фамилия",
     required: "required",
     id: "surname",
@@ -66,7 +69,8 @@ export default function CreateModalWindow(visibility, type) {
 
   const modalFormInputLastName = Input({
     type: "text",
-    name: "lastname",
+    name: "lastName",
+    value: data.lastName,
     placeholder: "Отчество",
     required: "required",
     id: "lastname",
@@ -122,26 +126,7 @@ export default function CreateModalWindow(visibility, type) {
           "http://localhost:3000/api/clients/",
           formInputValues
         );
-
-        console.log(savedData);
       }
-
-      //formInputValues.contacts.push({ type: "asdasdasd", value: "asdasd" });
-
-      // inputName.className = cn([
-      //   inputName.value.length === 0 &&
-      //     "bg-red-100 border-2 border-red-200 rounded-full px-[30px] py-[12px] w-[100%]",
-      // ]);
-
-      // inputSurName.className = cn([
-      //   inputSurName.value.length === 0 &&
-      //     "bg-red-100 border-2 border-red-200 rounded-full px-[30px] py-[12px] w-[100%]",
-      // ]);
-
-      // inputLastName.className = cn([
-      //   inputLastName.value.length === 0 &&
-      //     "bg-red-100 border-2 border-red-200 rounded-full px-[30px] py-[12px] w-[100%]",
-      // ]);
     },
     className:
       "save_btn w-[100%] text-white bg-[#169d1c] hover:bg-[#157739] rounded-b-[30px] rounded-tl-[0px] rounded-tr-[0px] py-3 px-10",
@@ -175,6 +160,16 @@ export default function CreateModalWindow(visibility, type) {
       modal.remove();
     }
   });
+
+  if (data.contacts.length > 0) {
+    const oneClientContacts = data.contacts;
+
+    // console.log(oneClientContacts);
+    // oneClientContacts.map((el) => {
+    //   addContactsArea.append(test);
+    //   //CONTACTS.push(el);
+    // });
+  }
 
   modalCloseBtn.addEventListener("click", () => {
     modal.classList.add("hide");

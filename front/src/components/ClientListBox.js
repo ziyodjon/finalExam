@@ -1,6 +1,7 @@
 import CreateModalWindow from "./CreateModalWindow.js";
 import { create, formatDate } from "../utils/index.js";
 import { Button } from "./Button.js";
+import { getDataById } from "../api/index.js";
 const types = {
   phone: "Телефон",
   email: "Е-мейл",
@@ -35,8 +36,12 @@ export default function ClientListBox(data) {
 
   clientChangeBtnsBox.append(
     Button("Изменить", "success", {
-      onclick: () => {
-        const modal = CreateModalWindow(true, "edit");
+      onclick: async (e) => {
+        const oneClientId = e.target.id;
+
+        const oneClientData = await getDataById(oneClientId);
+
+        const modal = CreateModalWindow(true, "edit", oneClientData);
         document.body.append(modal);
       },
       className: "hover:bg-[#157739]",
