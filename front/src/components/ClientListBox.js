@@ -2,6 +2,8 @@ import CreateModalWindow from "./CreateModalWindow.js";
 import { create, formatDate } from "../utils/index.js";
 import { Button } from "./Button.js";
 import { getDataById } from "../api/index.js";
+import { renderData } from "../utils/index.js";
+import { deleteData } from "../utils/index.js";
 const types = {
   phone: "Телефон",
   email: "Е-мейл",
@@ -25,11 +27,14 @@ export default function ClientListBox(data) {
   const clientContactsBox = document.createElement("div");
   clientContactsBox.classList.add("contacts-box");
 
-  clientContactsBox.append(
-    ...data.contacts.map((element) =>
-      create("div", { content: `${types[element.type]}: ${element.value}` })
-    )
-  );
+  if (data.contacts) {
+    clientContactsBox.append(
+      ...data.contacts.map((element) =>
+        create("div", { content: `${types[element.type]}: ${element.value}` })
+      )
+    );
+  }
+
   const clientChangeBtnsBox = create("div", {
     className: "change-btn-box flex justify-end items-start gap-3",
   });
@@ -47,7 +52,17 @@ export default function ClientListBox(data) {
       className: "hover:bg-[#157739]",
       id: data.id,
     }),
-    Button("Удалить", "error", { className: "hover:bg-[#881c1c]", id: data.id })
+    Button("Удалить", "error", {
+      onclick: (e) => {
+        const currentDataId = e.target.id;
+        const url = `http://localhost:3000/api/clients/${currentDataId}`;
+        if (confirm("Вы уверены удалить этот запись ?")) {
+          deleteData(url, renderData);
+        }
+      },
+      className: "hover:bg-[#881c1c]",
+      id: data.id,
+    })
   );
 
   clientsListBox.append(

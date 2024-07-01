@@ -3,6 +3,9 @@ import { Button } from "./Button.js";
 import { create } from "../utils/index.js";
 import Input from "./Input.js";
 import { saveData } from "../utils/index.js";
+import { updateData } from "../utils/index.js";
+import { deleteData } from "../utils/index.js";
+import { renderData, delModal } from "../utils/index.js";
 import Select from "./Select.js";
 
 let CONTACTS = [];
@@ -48,7 +51,7 @@ export default function CreateModalWindow(visibility, type, data = {}) {
   const modalFormInputName = Input({
     type: "text",
     name: "name",
-    value: data.name,
+    value: data.name ? data.name : "",
     placeholder: "Имя",
     required: "required",
     id: "name",
@@ -59,7 +62,7 @@ export default function CreateModalWindow(visibility, type, data = {}) {
   const modalFormInputSurname = Input({
     type: "text",
     name: "surname",
-    value: data.surname,
+    value: data.surname ? data.surname : "",
     placeholder: "Фамилия",
     required: "required",
     id: "surname",
@@ -70,7 +73,7 @@ export default function CreateModalWindow(visibility, type, data = {}) {
   const modalFormInputLastName = Input({
     type: "text",
     name: "lastName",
-    value: data.lastName,
+    value: data.lastName ? data.lastName : "",
     placeholder: "Отчество",
     required: "required",
     id: "lastname",
@@ -122,30 +125,62 @@ export default function CreateModalWindow(visibility, type, data = {}) {
         formInputValues.name.length > 0 &&
         formInputValues.surname.length > 0
       ) {
-        const savedData = saveData(
+        saveData(
           "http://localhost:3000/api/clients/",
-          formInputValues
+          formInputValues,
+          renderData
         );
+        delModal();
       }
     },
     className:
       "save_btn w-[100%] text-white bg-[#169d1c] hover:bg-[#157739] rounded-b-[30px] rounded-tl-[0px] rounded-tr-[0px] py-3 px-10",
+    id: data.id,
     type: "submit",
   });
 
   const modalDoubleDeleteBtn = Button("Удалить", "error", {
-    onclick: () => console.log("We should delete this item"),
+    onclick: (e) => {
+      e.preventDefault();
+      const currentDataId = e.target.id;
+      const url = `http://localhost:3000/api/clients/${currentDataId}`;
+      if (confirm("Вы уверены удалить этот запись ?")) {
+        deleteData(url, renderData);
+        delModal();
+      }
+    },
     className:
       "save_btn w-[100%] text-white bg-[#ee3d54] hover:bg-[#881c1c] rounded-b-[30px] rounded-tl-[0px] rounded-tr-[0px] rounded-br-[0px] py-3 px-10",
+    id: data.id,
   });
 
   const modalDoubleSaveBtn = Button("Сохранить", "success", {
-    onclick: () => {
-      console.log("Save data");
+    onclick: (e) => {
+      e.preventDefault();
+      const elements = document.getElementById("createForm").elements;
+      const updatedValues = {
+        name: elements.name.value,
+        surname: elements.surname.value,
+        lastName: elements.lastname.value,
+        contacts: CONTACTS.map((_, index) => ({
+          type: elements[`contactType${index + 1}`].value,
+          value: elements[`contactValue${index + 1}`].value,
+        })),
+      };
+
+      if (updatedValues.name.length > 0 && updatedValues.surname.length > 0) {
+        updateData(
+          `http://localhost:3000/api/clients/${data.id}`,
+          updatedValues,
+          renderData
+        );
+        delModal();
+      }
     },
     className:
       "save_btn w-[100%] text-white bg-[#00B007] rounded-b-[30px] hover:bg-[#157739] rounded-tl-[0px] rounded-bl-[0px] rounded-tr-[0px] py-3 px-10",
     type: "submit",
+    id: data.id,
   });
 
   if (visibility) {
@@ -155,33 +190,26 @@ export default function CreateModalWindow(visibility, type, data = {}) {
 
   modal.addEventListener("click", (e) => {
     if (e.target.id === "mymodal") {
-      modal.classList.add("hide");
-      modal.classList.remove("open");
-      modal.remove();
+      delModal();
     }
   });
 
-  if (data.contacts.length > 0) {
+  if (data.hasOwnProperty("contacts") && data.contacts.length > 0) {
     const oneClientContacts = data.contacts;
-    //ВОТ ТУТ ПРОБЛЕМА ))
-    // console.log(oneClientContacts);
-    // oneClientContacts.map((el) => {
-    //   addContactsArea.append(test);
-    //   //CONTACTS.push(el);
-    // });
+    CONTACTS = [];
+    for (let contact of data.contacts) {
+      addContactsArea.append(AddClientContacts(CONTACTS, contact));
+      CONTACTS.push({});
+    }
   }
 
   modalCloseBtn.addEventListener("click", () => {
-    modal.classList.add("hide");
-    modal.classList.remove("open");
-    modal.remove();
+    delModal();
   });
 
   window.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
-      modal.classList.add("hide");
-      modal.classList.remove("open");
-      modal.remove();
+      delModal();
     }
   });
 
@@ -201,7 +229,6 @@ export default function CreateModalWindow(visibility, type, data = {}) {
     addContactBtnWrap
   );
 
-  //modalBody.append(modalForm);
   modalCloseBtn.append(modalCloseIcon);
   modalHeader.append(modalCaptionText, modalCloseBtn);
   modalBox.append(modalHeader, modalBody, modalFooter);

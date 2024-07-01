@@ -1,13 +1,15 @@
-export default function Select({ options, ...props } = {}, datas) {
+export default function Select({ options, ...props } = {}) {
   const select = document.createElement("select");
 
   Object.assign(select, props);
 
-  options.forEach((optionData, index) => {
+  options.forEach((optionData) => {
     const option = document.createElement("option");
-    option.value = optionData.value;
-    option.text = optionData.text;
-    option.selected = optionData.selected;
+    for (let i in optionData) {
+      if (optionData[i]) {
+        option[i] = optionData[i];
+      }
+    }
     select.appendChild(option);
   });
 

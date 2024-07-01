@@ -2,11 +2,16 @@ import Input from "./Input";
 import Select from "./Select.js";
 import { create, getContacts } from "../utils/index.js";
 
-export default function AddClientContacts(CONTACTS) {
+export default function AddClientContacts(CONTACTS, contact = {}) {
   const length = CONTACTS.length;
   const addContactsItems = create("div", {
     className: "addContactsItems flex justify-between gap-1 my-[10px]",
   });
+
+  let selectValue = false;
+  if (contact && contact.type) {
+    selectValue = contact.type;
+  }
 
   const addContactSelect = Select({
     className:
@@ -16,9 +21,21 @@ export default function AddClientContacts(CONTACTS) {
       const selectValue = getContacts();
     },
     options: [
-      { value: "phone", text: "Телефон" },
-      { value: "email", text: "E-mail" },
-      { value: "telegram", text: "Телеграм" },
+      {
+        value: "phone",
+        text: "Телефон",
+        selected: contact.hasOwnProperty("type") && contact.type == "phone",
+      },
+      {
+        value: "email",
+        text: "E-mail",
+        selected: contact.hasOwnProperty("type") && contact.type == "email",
+      },
+      {
+        value: "telegram",
+        text: "Телеграм",
+        selected: contact.hasOwnProperty("type") && contact.type == "telegram",
+      },
     ],
   });
 
@@ -26,6 +43,7 @@ export default function AddClientContacts(CONTACTS) {
     type: "text",
     name: `contactValue${length + 1}`,
     placeholder: "Значения контакта",
+    value: contact.hasOwnProperty("value") ? contact.value : "",
     className:
       "contactValue bg-[#f2f2f2] rounded-full px-[30px] py-[12px] w-[268px]",
   });
