@@ -1,7 +1,7 @@
 import "../css/style.css";
 import ClientListBox from "../../components/ClientListBox.js";
 import CreateModalWindow from "../../components/CreateModalWindow.js";
-import { create, renderData } from "../../utils/index.js";
+import { create, sortDate, sortName } from "../../utils/index.js";
 import { Button } from "../../components/Button.js";
 import { request } from "../../api/index.js";
 
@@ -31,15 +31,24 @@ clientsCaptionsBox.classList.add(
   "mt-5"
 );
 
-const clientFioTitle = document.createElement("button");
-clientFioTitle.classList.add("px-10");
-clientFioTitle.textContent = "ФИО";
+const clientFioTitle = Button("ФИО", null, {
+  onclick: (e) => {
+    sortName();
+  },
+  className: "px-10",
+});
 
-const clientCreatedDateTitle = document.createElement("button");
-clientCreatedDateTitle.textContent = "Дата создания";
+const clientCreatedDateTitle = Button("Дата создания", null, {
+  onclick: (e) => {
+    sortDate();
+  },
+  className: "px-10",
+});
 
-const clientContactsTitle = document.createElement("div");
-clientContactsTitle.textContent = "Контакты";
+const clientContactsTitle = create("div", {
+  className: "px-10 py-2",
+  content: "Контакты",
+});
 
 clientsCaptionsBox.append(
   clientFioTitle,
