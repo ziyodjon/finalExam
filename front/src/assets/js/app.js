@@ -64,25 +64,10 @@ clientsCaptionsBox.append(
   clientContactsTitle
 );
 
-// const clientsListBoxes = allData.map((data) => ClientListBox(data));
 const clientsListBoxes = allData.map((data) => ClientListBox(data));
 
-// console.log(clientsListBoxes);
-
 clientsListWrap.append(...clientsListBoxes);
-//renderData();
 
 app.append(clientsCaptionsBox, clientsListWrap, footer);
 
 export default app;
-
-// const simpleButton = Button("Simple button", "success", {
-//   onclick: () => {
-//     const tog = myToggle();
-//     const res = sortNames(allData, null, tog);
-//     console.log(res);
-//   },
-//   className: "text-white py-2 px-20 hover:bg-[#157739]",
-// });
-
-// document.body.prepend(simpleButton);

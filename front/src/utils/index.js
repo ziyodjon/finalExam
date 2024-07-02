@@ -63,23 +63,6 @@ export async function updateData(url, data, onSuccess) {
   }
 }
 
-// export async function sortName() {
-//   const clientsListWrap = document.querySelector(".clients-list-wrap");
-//   const allData = await request("clients");
-//   allData.sort((a, b) => {
-//     if (a.name < b.name) {
-//       return -1;
-//     }
-//     if (a.name > b.name) {
-//       return 1;
-//     }
-//     return 0;
-//   });
-//   const clientsListBoxes = allData.map((data) => ClientListBox(data));
-//   clientsListWrap.innerHTML = "";
-//   clientsListWrap.append(...clientsListBoxes);
-// }
-
 export function sortNames(arr, dir) {
   const clientsListWrap = document.querySelector(".clients-list-wrap");
   const fioIconArea = document.querySelector(".fio-icon-area");
@@ -103,7 +86,6 @@ export function sortNames(arr, dir) {
   const clientsListBoxes = result.map((data) => ClientListBox(data));
   clientsListWrap.innerHTML = "";
   clientsListWrap.append(...clientsListBoxes);
-  //return result;
 }
 
 export function sortDates(arr, dir) {
@@ -127,24 +109,6 @@ export function sortDates(arr, dir) {
     fioIconArea.append(arrowDown);
   }
   const clientsListBoxes = result.map((data) => ClientListBox(data));
-  clientsListWrap.innerHTML = "";
-  clientsListWrap.append(...clientsListBoxes);
-  //return result;
-}
-
-export async function sortDate() {
-  const clientsListWrap = document.querySelector(".clients-list-wrap");
-  const allData = await request("clients");
-  allData.sort((a, b) => {
-    if (a["createdAt"] > b["createdAt"]) {
-      return -1;
-    }
-    if (a["createdAt"] < b["createdAt"]) {
-      return 1;
-    }
-    return 0;
-  });
-  const clientsListBoxes = allData.map((data) => ClientListBox(data));
   clientsListWrap.innerHTML = "";
   clientsListWrap.append(...clientsListBoxes);
 }
