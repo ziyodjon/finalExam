@@ -63,31 +63,83 @@ export async function updateData(url, data, onSuccess) {
   }
 }
 
-export async function sortName() {
+// export async function sortName() {
+//   const clientsListWrap = document.querySelector(".clients-list-wrap");
+//   const allData = await request("clients");
+//   allData.sort((a, b) => {
+//     if (a.name < b.name) {
+//       return -1;
+//     }
+//     if (a.name > b.name) {
+//       return 1;
+//     }
+//     return 0;
+//   });
+//   const clientsListBoxes = allData.map((data) => ClientListBox(data));
+//   clientsListWrap.innerHTML = "";
+//   clientsListWrap.append(...clientsListBoxes);
+// }
+
+export function sortNames(arr, dir) {
   const clientsListWrap = document.querySelector(".clients-list-wrap");
-  const allData = await request("clients");
-  allData.sort((a, b) => {
-    if (a.name < b.name) {
-      return -1;
-    }
-    if (a.name > b.name) {
-      return 1;
-    }
-    return 0;
-  });
-  const clientsListBoxes = allData.map((data) => ClientListBox(data));
+  const fioIconArea = document.querySelector(".fio-icon-area");
+  const arrowUp = document.createElement("i");
+  arrowUp.classList.add("fa", "fa-sort-asc", "px-1");
+
+  const arrowDown = document.createElement("i");
+  arrowDown.classList.add("fa", "fa-sort-desc", "px-1");
+  let result = "";
+  if (dir === false) {
+    result = arr.sort((a, b) => a.name > b.name);
+    fioIconArea.innerHTML = "";
+    fioIconArea.append(arrowUp);
+  }
+
+  if (dir === true) {
+    result = arr.sort((a, b) => a.name < b.name);
+    fioIconArea.innerHTML = "";
+    fioIconArea.append(arrowDown);
+  }
+  const clientsListBoxes = result.map((data) => ClientListBox(data));
   clientsListWrap.innerHTML = "";
   clientsListWrap.append(...clientsListBoxes);
+  //return result;
+}
+
+export function sortDates(arr, dir) {
+  const clientsListWrap = document.querySelector(".clients-list-wrap");
+  const fioIconArea = document.querySelector(".date-icon-area");
+  const arrowUp = document.createElement("i");
+  arrowUp.classList.add("fa", "fa-sort-asc", "px-1");
+
+  const arrowDown = document.createElement("i");
+  arrowDown.classList.add("fa", "fa-sort-desc", "px-1");
+  let result = "";
+  if (dir === false) {
+    result = arr.sort((a, b) => a.createdAt > b.createdAt);
+    fioIconArea.innerHTML = "";
+    fioIconArea.append(arrowUp);
+  }
+
+  if (dir === true) {
+    result = arr.sort((a, b) => a.createdAt < b.createdAt);
+    fioIconArea.innerHTML = "";
+    fioIconArea.append(arrowDown);
+  }
+  const clientsListBoxes = result.map((data) => ClientListBox(data));
+  clientsListWrap.innerHTML = "";
+  clientsListWrap.append(...clientsListBoxes);
+  //return result;
 }
 
 export async function sortDate() {
   const clientsListWrap = document.querySelector(".clients-list-wrap");
   const allData = await request("clients");
   allData.sort((a, b) => {
-    if (a.createdAt < b.createdAt) {
+    if (a["createdAt"] > b["createdAt"]) {
       return -1;
     }
-    if (a.createdAt > b.createdAt) {
+    if (a["createdAt"] < b["createdAt"]) {
       return 1;
     }
     return 0;
@@ -129,6 +181,10 @@ export async function deleteData(url, onSuccess) {
   } catch (error) {
     console.error("Error deleting data:", error);
   }
+}
+let isActive = false;
+export function myToggle() {
+  return (isActive = !isActive);
 }
 
 export const getElement = (selector) => document.querySelector(selector);
