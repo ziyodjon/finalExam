@@ -83,7 +83,15 @@ export async function sortName() {
 export async function sortDate() {
   const clientsListWrap = document.querySelector(".clients-list-wrap");
   const allData = await request("clients");
-  allData.sort((a, b) => a - b);
+  allData.sort((a, b) => {
+    if (a.createdAt < b.createdAt) {
+      return -1;
+    }
+    if (a.createdAt > b.createdAt) {
+      return 1;
+    }
+    return 0;
+  });
   const clientsListBoxes = allData.map((data) => ClientListBox(data));
   clientsListWrap.innerHTML = "";
   clientsListWrap.append(...clientsListBoxes);
