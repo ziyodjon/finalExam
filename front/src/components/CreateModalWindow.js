@@ -55,8 +55,6 @@ export default function CreateModalWindow(visibility, type, data = {}) {
     placeholder: "Имя",
     required: "required",
     id: "name",
-    className:
-      "bg-[#f2f2f2] focus:outline-none focus-visible:white border-2 border-transparent rounded-full px-[30px] py-[12px] w-[100%]",
   });
 
   const modalFormInputSurname = Input({
@@ -66,8 +64,6 @@ export default function CreateModalWindow(visibility, type, data = {}) {
     placeholder: "Фамилия",
     required: "required",
     id: "surname",
-    className:
-      "bg-[#f2f2f2] border-2 border-transparent rounded-full px-[30px] py-[12px] w-[100%]",
   });
 
   const modalFormInputLastName = Input({
@@ -77,12 +73,11 @@ export default function CreateModalWindow(visibility, type, data = {}) {
     placeholder: "Отчество",
     required: "required",
     id: "lastname",
-    className:
-      "bg-[#f2f2f2] border-2 border-transparent rounded-full px-[30px] py-[12px] w-[100%]",
   });
 
   const addContactsArea = create("div", {
     className: "addContactsArea",
+    id: "addContactsArea",
   });
 
   const addContactBtnWrap = create("div", {
@@ -91,9 +86,7 @@ export default function CreateModalWindow(visibility, type, data = {}) {
 
   const addContactBtn = Button("Добавить контакт", "success", {
     onclick: () => {
-      document
-        .querySelector(".addContactsArea")
-        .append(AddClientContacts(CONTACTS));
+      addContactsArea.append(AddClientContacts(CONTACTS));
       CONTACTS.push({});
     },
 
@@ -109,21 +102,102 @@ export default function CreateModalWindow(visibility, type, data = {}) {
   const modalSingleSaveBtn = Button("Сохранить", "success", {
     onclick: (e) => {
       e.preventDefault();
+
       const elements = document.getElementById("createForm").elements;
+
+      if (elements.name.value !== "") {
+        elements.name.classList.remove("invalid-field");
+      } else {
+        elements.name.classList.add("invalid-field");
+      }
+
+      if (elements.surname.value !== "") {
+        elements.surname.classList.remove("invalid-field");
+      } else {
+        elements.surname.classList.add("invalid-field");
+      }
+
+      if (elements.lastName.value !== "") {
+        elements.lastName.classList.remove("invalid-field");
+      } else {
+        elements.lastName.classList.add("invalid-field");
+      }
+
+      modalFormInputName.addEventListener("input", () => {
+        if (elements.name.value !== "" && elements.name.value.length > 0) {
+          elements.name.classList.remove("invalid-field");
+        } else {
+          elements.name.classList.add("invalid-field");
+        }
+      });
+
+      modalFormInputSurname.addEventListener("input", () => {
+        if (
+          elements.surname.value !== "" &&
+          elements.surname.value.length > 0
+        ) {
+          elements.surname.classList.remove("invalid-field");
+        } else {
+          elements.surname.classList.add("invalid-field");
+        }
+      });
+
+      modalFormInputLastName.addEventListener("input", () => {
+        if (
+          elements.lastName.value !== "" &&
+          elements.lastName.value.length > 0
+        ) {
+          elements.lastName.classList.remove("invalid-field");
+        } else {
+          elements.lastName.classList.add("invalid-field");
+        }
+      });
 
       const formInputValues = {
         name: elements.name.value,
         surname: elements.surname.value,
-        lastName: elements.lastname.value,
+        lastName: elements.lastName.value,
         contacts: CONTACTS.map((_, index) => ({
           type: elements[`contactType${index + 1}`].value,
           value: elements[`contactValue${index + 1}`].value,
         })),
       };
 
+      let checkType = false;
+      CONTACTS.pop();
+      if (formInputValues.contacts.length === 0) {
+        CONTACTS.pop();
+        checkType = true;
+      } else {
+        formInputValues.contacts.map((el, index) => {
+          const contactIputEl = elements[`contactValue${index + 1}`];
+
+          contactIputEl.addEventListener("input", (e) => {
+            if (contactIputEl.value.length > 0) {
+              contactIputEl.classList.remove("invalid-field");
+            } else {
+              contactIputEl.classList.add("invalid-field");
+            }
+          });
+
+          if (el.value !== "") {
+            contactIputEl.classList.remove("invalid-field");
+            checkType = true;
+          } else {
+            contactIputEl.classList.add("invalid-field");
+
+            checkType = false;
+          }
+        });
+      }
+
+      console.log(checkType);
+
       if (
         formInputValues.name.length > 0 &&
-        formInputValues.surname.length > 0
+        formInputValues.surname.length > 0 &&
+        formInputValues.lastName.length > 0 &&
+        checkType
       ) {
         saveData(
           "http://localhost:3000/api/clients/",
@@ -158,6 +232,7 @@ export default function CreateModalWindow(visibility, type, data = {}) {
     onclick: (e) => {
       e.preventDefault();
       const elements = document.getElementById("createForm").elements;
+
       const updatedValues = {
         name: elements.name.value,
         surname: elements.surname.value,
@@ -168,13 +243,46 @@ export default function CreateModalWindow(visibility, type, data = {}) {
         })),
       };
 
-      if (updatedValues.name.length > 0 && updatedValues.surname.length > 0) {
+      let checkType = false;
+      if (updatedValues.contacts.length === 0) {
+        checkType = true;
+      } else {
+        updatedValues.contacts.map((el, index) => {
+          const contactIputEl = elements[`contactValue${index + 1}`];
+
+          contactIputEl.addEventListener("input", (e) => {
+            if (contactIputEl.value.length > 0) {
+              contactIputEl.classList.remove("invalid-field");
+            } else {
+              contactIputEl.classList.add("invalid-field");
+            }
+          });
+
+          if (el.value !== "") {
+            contactIputEl.classList.remove("invalid-field");
+            checkType = true;
+          } else {
+            contactIputEl.classList.add("invalid-field");
+
+            checkType = false;
+          }
+        });
+      }
+
+      console.log(checkType);
+
+      if (
+        updatedValues.name.length > 0 &&
+        updatedValues.surname.length > 0 &&
+        checkType
+      ) {
         updateData(
           `http://localhost:3000/api/clients/${data.id}`,
           updatedValues,
           renderData
         );
         delModal();
+        CONTACTS.pop();
       }
     },
     className:
@@ -191,6 +299,7 @@ export default function CreateModalWindow(visibility, type, data = {}) {
   modal.addEventListener("click", (e) => {
     if (e.target.id === "mymodal") {
       delModal();
+      CONTACTS.pop();
     }
   });
 

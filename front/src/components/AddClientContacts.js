@@ -59,6 +59,7 @@ export default function AddClientContacts(CONTACTS, contact = {}) {
   addContactDelBtn.addEventListener("click", function (e) {
     if (this.parentNode.id === e.target.parentNode.id) {
       this.parentNode.remove();
+      CONTACTS.pop();
     }
   });
 
