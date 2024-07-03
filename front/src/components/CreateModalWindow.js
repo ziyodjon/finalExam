@@ -284,6 +284,7 @@ export default function CreateModalWindow(visibility, type, data = {}) {
         delModal();
         CONTACTS.pop();
       }
+      CONTACTS.pop();
     },
     className:
       "save_btn w-[100%] text-white bg-[#00B007] rounded-b-[30px] hover:bg-[#157739] rounded-tl-[0px] rounded-bl-[0px] rounded-tr-[0px] py-3 px-10",
