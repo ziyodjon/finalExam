@@ -164,7 +164,7 @@ export default function CreateModalWindow(visibility, type, data = {}) {
       let checkType = false;
 
       if (formInputValues.contacts.length === 0) {
-        CONTACTS.pop();
+
         checkType = true;
       } else {
         formInputValues.contacts.map((el, index) => {
@@ -202,6 +202,7 @@ export default function CreateModalWindow(visibility, type, data = {}) {
           renderData
         );
         delModal();
+        CONTACTS.pop();
       }
     },
     className:
