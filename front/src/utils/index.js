@@ -30,7 +30,6 @@ export function getContacts() {
 
 
 export function sortNames(arr, dir) {
-  console.log(dir);
   const clientsListWrap = document.querySelector(".clients-list-wrap");
   const fioIconArea = document.querySelector(".fio-icon-area");
   const arrowUp = document.createElement("i");
