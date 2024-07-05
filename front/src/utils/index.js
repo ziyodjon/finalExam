@@ -87,7 +87,9 @@ export function sortDates(arr, dir) {
   }
 
   if (dir === true) {
-    result = arr.sort((a, b) => a.createdAt < b.createdAt);
+    result = arr.sort((a, b) => {
+      return a.createdAt.localeCompare(b.createdAt);
+    });
     fioIconArea.innerHTML = "";
     fioIconArea.append(arrowDown);
   }
