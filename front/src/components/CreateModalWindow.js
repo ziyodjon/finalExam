@@ -103,17 +103,23 @@ export default function CreateModalWindow(visibility, type, data = {}) {
 
       const elements = document.getElementById("createForm").elements;
 
+      //elements.name.classList.toggle("invalid-field", elements.name.value !== "");
+
       if (elements.name.value !== "") {
         elements.name.classList.remove("invalid-field");
       } else {
         elements.name.classList.add("invalid-field");
       }
 
+      //elements.surname.classList.toggle("invalid-field", elements.surname.value !== "");
+
       if (elements.surname.value !== "") {
         elements.surname.classList.remove("invalid-field");
       } else {
         elements.surname.classList.add("invalid-field");
       }
+
+      //elements.lastName.classList.toggle("invalid-field", elements.lastName.value !== "");
 
       if (elements.lastName.value !== "") {
         elements.lastName.classList.remove("invalid-field");
@@ -161,6 +167,8 @@ export default function CreateModalWindow(visibility, type, data = {}) {
         })),
       };
 
+
+
       let checkType = false;
 
       if (formInputValues.contacts.length === 0) {
@@ -187,6 +195,7 @@ export default function CreateModalWindow(visibility, type, data = {}) {
             checkType = false;
           }
         });
+        CONTACTS.pop();
       }
 
 
