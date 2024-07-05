@@ -103,13 +103,13 @@ export default function CreateModalWindow(visibility, type, data = {}) {
 
       const elements = document.getElementById("createForm").elements;
 
-      //elements.name.classList.toggle("invalid-field", elements.name.value !== "");
+      elements.name.classList.toggle("invalid-field", elements.name.value === "");
 
-      if (elements.name.value !== "") {
-        elements.name.classList.remove("invalid-field");
-      } else {
-        elements.name.classList.add("invalid-field");
-      }
+      // if (elements.name.value !== "") {
+      //   elements.name.classList.remove("invalid-field");
+      // } else {
+      //   elements.name.classList.add("invalid-field");
+      // }
 
       //elements.surname.classList.toggle("invalid-field", elements.surname.value !== "");
 
@@ -177,7 +177,6 @@ export default function CreateModalWindow(visibility, type, data = {}) {
       } else {
         formInputValues.contacts.map((el, index) => {
           const contactIputEl = elements[`contactValue${index + 1}`];
-
           contactIputEl.addEventListener("input", (e) => {
             if (contactIputEl.value.length > 0) {
               contactIputEl.classList.remove("invalid-field");
@@ -195,7 +194,7 @@ export default function CreateModalWindow(visibility, type, data = {}) {
             checkType = false;
           }
         });
-        CONTACTS.pop();
+
       }
 
 
