@@ -1,9 +1,8 @@
 import CreateModalWindow from "./CreateModalWindow.js";
 import { create, formatDate } from "../utils/index.js";
 import { Button } from "./Button.js";
-import { getDataById } from "../api/index.js";
+import { getDataById, deleteData } from "../api/index.js";
 import { renderData } from "../utils/index.js";
-import { deleteData } from "../utils/index.js";
 const types = {
   phone: "Телефон",
   email: "Е-мейл",

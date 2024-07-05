@@ -25,45 +25,12 @@ export function getContacts() {
   return document.querySelectorAll(".contactTypes");
 }
 
-// Функция для отправки данных
-export async function saveData(url = "", data = {}, onSuccess) {
-  // Параметры запроса
-  const response = await fetch(url, {
-    method: "POST", // Метод запроса
-    headers: {
-      "Content-Type": "application/json", // Заголовок для указания типа контента
-    },
-    body: JSON.stringify(data), // Преобразование данных в JSON-строку
-  });
-  onSuccess?.();
-  // Ожидание ответа от сервера
-  return response.json(); // Преобразование ответа в JSON
-}
 
-// Update data
-export async function updateData(url, data, onSuccess) {
-  try {
-    const response = await fetch(url, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
 
-    const result = await response.json();
-    console.log("Data updated successfully:", result);
-    onSuccess?.();
-  } catch (error) {
-    console.error("Error updating data:", error);
-  }
-}
 
 export function sortNames(arr, dir) {
+  console.log(dir);
   const clientsListWrap = document.querySelector(".clients-list-wrap");
   const fioIconArea = document.querySelector(".fio-icon-area");
   const arrowUp = document.createElement("i");
@@ -73,16 +40,29 @@ export function sortNames(arr, dir) {
   arrowDown.classList.add("fa", "fa-sort-desc", "px-1");
   let result = "";
   if (dir === false) {
-    result = arr.sort((a, b) => a.name > b.name);
+    result = arr.sort((a, b) => {
+      return a.name.localeCompare(b.name);
+      // if (a.name > b.name) {
+      //   return -1;
+      // }
+      // return 0;
+    });
     fioIconArea.innerHTML = "";
     fioIconArea.append(arrowUp);
   }
 
   if (dir === true) {
-    result = arr.sort((a, b) => a.name < b.name);
+    result = arr.sort((a, b) => {
+      return b.name.localeCompare(a.name);
+      // if (a.name < b.name) {
+      //   return 1;
+      // }
+      // return 0;
+    });
     fioIconArea.innerHTML = "";
     fioIconArea.append(arrowDown);
   }
+
   const clientsListBoxes = result.map((data) => ClientListBox(data));
   clientsListWrap.innerHTML = "";
   clientsListWrap.append(...clientsListBoxes);
@@ -98,7 +78,10 @@ export function sortDates(arr, dir) {
   arrowDown.classList.add("fa", "fa-sort-desc", "px-1");
   let result = "";
   if (dir === false) {
-    result = arr.sort((a, b) => a.createdAt > b.createdAt);
+
+    result = arr.sort((a, b) => {
+      return b.createdAt.localeCompare(a.createdAt);
+    });
     fioIconArea.innerHTML = "";
     fioIconArea.append(arrowUp);
   }
@@ -123,29 +106,12 @@ export async function renderData() {
 
 export function delModal() {
   const myModal = document.getElementById("mymodal");
-  myModal.classList.add("hide");
-  myModal.classList.remove("open");
-  myModal.remove();
-}
-
-export async function deleteData(url, onSuccess) {
-  try {
-    const response = await fetch(url, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    onSuccess?.();
-    console.log("Data deleted successfully");
-  } catch (error) {
-    console.error("Error deleting data:", error);
+  if (myModal !== null) {
+    myModal.remove();
   }
 }
+
+
 let isActive = false;
 export function myToggle() {
   return (isActive = !isActive);

@@ -2,11 +2,9 @@ import AddClientContacts from "./AddClientContacts.js";
 import { Button } from "./Button.js";
 import { create } from "../utils/index.js";
 import Input from "./Input.js";
-import { saveData } from "../utils/index.js";
-import { updateData } from "../utils/index.js";
-import { deleteData } from "../utils/index.js";
+import { updateData, deleteData, saveData } from "../api/index.js";
 import { renderData, delModal } from "../utils/index.js";
-import Select from "./Select.js";
+// import Select from "./Select.js";
 
 let CONTACTS = [];
 
@@ -164,7 +162,7 @@ export default function CreateModalWindow(visibility, type, data = {}) {
       };
 
       let checkType = false;
-      CONTACTS.pop();
+
       if (formInputValues.contacts.length === 0) {
         CONTACTS.pop();
         checkType = true;
@@ -191,7 +189,6 @@ export default function CreateModalWindow(visibility, type, data = {}) {
         });
       }
 
-      console.log(checkType);
 
       if (
         formInputValues.name.length > 0 &&
@@ -267,9 +264,9 @@ export default function CreateModalWindow(visibility, type, data = {}) {
             checkType = false;
           }
         });
+        CONTACTS.pop();
       }
 
-      console.log(checkType);
 
       if (
         updatedValues.name.length > 0 &&
@@ -315,11 +312,13 @@ export default function CreateModalWindow(visibility, type, data = {}) {
 
   modalCloseBtn.addEventListener("click", () => {
     delModal();
+    CONTACTS.pop();
   });
 
   window.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       delModal();
+      CONTACTS.pop();
     }
   });
 
