@@ -111,21 +111,21 @@ export default function CreateModalWindow(visibility, type, data = {}) {
       //   elements.name.classList.add("invalid-field");
       // }
 
-      //elements.surname.classList.toggle("invalid-field", elements.surname.value !== "");
+      elements.surname.classList.toggle("invalid-field", elements.surname.value === "");
 
-      if (elements.surname.value !== "") {
-        elements.surname.classList.remove("invalid-field");
-      } else {
-        elements.surname.classList.add("invalid-field");
-      }
+      // if (elements.surname.value !== "") {
+      //   elements.surname.classList.remove("invalid-field");
+      // } else {
+      //   elements.surname.classList.add("invalid-field");
+      // }
 
-      //elements.lastName.classList.toggle("invalid-field", elements.lastName.value !== "");
+      elements.lastName.classList.toggle("invalid-field", elements.lastName.value === "");
 
-      if (elements.lastName.value !== "") {
-        elements.lastName.classList.remove("invalid-field");
-      } else {
-        elements.lastName.classList.add("invalid-field");
-      }
+      // if (elements.lastName.value !== "") {
+      //   elements.lastName.classList.remove("invalid-field");
+      // } else {
+      //   elements.lastName.classList.add("invalid-field");
+      // }
 
       modalFormInputName.addEventListener("input", () => {
         if (elements.name.value !== "" && elements.name.value.length > 0) {
