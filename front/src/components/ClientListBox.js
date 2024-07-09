@@ -45,7 +45,6 @@ export default function ClientListBox(data) {
         const oneClientId = e.target.id;
 
         const oneClientData = await getDataById(oneClientId);
-        console.log(oneClientData);
 
         const modal = CreateModalWindow(true, "edit", oneClientData);
         document.body.append(modal);

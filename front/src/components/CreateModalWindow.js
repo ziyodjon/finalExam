@@ -156,7 +156,6 @@ export default function CreateModalWindow(visibility, type, data = {}) {
         }
       });
 
-      console.log(CONTACTS);
       const formInputValues = {
         name: elements.name.value,
         surname: elements.surname.value,
@@ -237,7 +236,6 @@ export default function CreateModalWindow(visibility, type, data = {}) {
   const modalDoubleSaveBtn = Button("Сохранить", "success", {
     onclick: (e) => {
 
-      console.log(CONTACTS);
       e.preventDefault();
       const elements = document.getElementById("createForm").elements;
       const updatedValues = {
@@ -257,9 +255,7 @@ export default function CreateModalWindow(visibility, type, data = {}) {
         checkType = true;
       } else {
         updatedValues.contacts.map((el, index) => {
-          //const contactIputEl = elements[`contactValue${index}`];
           const contactIputEl = elements[`contactValue${CONTACTS[index].id}`];
-          //console.log(elements[`contactValue${CONTACTS[index].id}`][0]);
           contactIputEl.addEventListener("input", (e) => {
             if (contactIputEl.value.length > 0) {
               contactIputEl.classList.remove("invalid-field");

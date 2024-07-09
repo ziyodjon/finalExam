@@ -3,7 +3,7 @@ import Select from "./Select.js";
 import { create, getContacts } from "../utils/index.js";
 
 export default function AddClientContacts(CONTACTS, contact = {}, unicId) {
-  //const length = CONTACTS.length;
+
   const addContactsItems = create("div", {
     className: "addContactsItems flex justify-between gap-1 my-[10px]",
   });
@@ -68,7 +68,6 @@ export default function AddClientContacts(CONTACTS, contact = {}, unicId) {
           CONTACTS.splice(index, 1)
         }
       });
-      //console.log(e.target.id);
     }
 
 
