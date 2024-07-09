@@ -3,8 +3,7 @@ import { Button } from "./Button.js";
 import { create } from "../utils/index.js";
 import Input from "./Input.js";
 import { updateData, deleteData, saveData } from "../api/index.js";
-import { renderData, delModal } from "../utils/index.js";
-// import Select from "./Select.js";
+import { renderData, delModal, validateForm } from "../utils/index.js";
 
 let CONTACTS = [];
 
@@ -84,8 +83,8 @@ export default function CreateModalWindow(visibility, type, data = {}) {
 
   const addContactBtn = Button("Добавить контакт", "success", {
     onclick: () => {
-      addContactsArea.append(AddClientContacts(CONTACTS));
-      CONTACTS.push({});
+      CONTACTS.push({ id: Date.now() });
+      addContactsArea.append(AddClientContacts(CONTACTS, {}, Date.now()));
     },
 
     className:
@@ -157,26 +156,25 @@ export default function CreateModalWindow(visibility, type, data = {}) {
         }
       });
 
+      console.log(CONTACTS);
       const formInputValues = {
         name: elements.name.value,
         surname: elements.surname.value,
         lastName: elements.lastName.value,
         contacts: CONTACTS.map((_, index) => ({
-          type: elements[`contactType${index + 1}`].value,
-          value: elements[`contactValue${index + 1}`].value,
+          type: elements[`contactType${CONTACTS[index].id}`].value,
+          value: elements[`contactValue${CONTACTS[index].id}`].value,
         })),
       };
-
 
 
       let checkType = false;
 
       if (formInputValues.contacts.length === 0) {
-
         checkType = true;
       } else {
-        formInputValues.contacts.map((el, index) => {
-          const contactIputEl = elements[`contactValue${index + 1}`];
+        formInputValues.contacts.forEach((el, index) => {
+          const contactIputEl = elements[`contactValue${CONTACTS[index].id}`];
           contactIputEl.addEventListener("input", (e) => {
             if (contactIputEl.value.length > 0) {
               contactIputEl.classList.remove("invalid-field");
@@ -187,30 +185,31 @@ export default function CreateModalWindow(visibility, type, data = {}) {
 
           if (el.value !== "") {
             contactIputEl.classList.remove("invalid-field");
-            checkType = true;
+            checkType = checkType && true;
           } else {
             contactIputEl.classList.add("invalid-field");
-
             checkType = false;
           }
         });
 
       }
 
-
       if (
         formInputValues.name.length > 0 &&
         formInputValues.surname.length > 0 &&
-        formInputValues.lastName.length > 0 &&
-        checkType
+        formInputValues.lastName.length > 0
+
       ) {
-        saveData(
-          "http://localhost:3000/api/clients/",
-          formInputValues,
-          renderData
-        );
-        delModal();
-        CONTACTS.pop();
+        if (checkType) {
+          saveData(
+            "http://localhost:3000/api/clients/",
+            formInputValues,
+            renderData
+          );
+          delModal();
+          // CONTACTS = [];
+        }
+
       }
     },
     className:
@@ -234,28 +233,33 @@ export default function CreateModalWindow(visibility, type, data = {}) {
     id: data.id,
   });
 
+
   const modalDoubleSaveBtn = Button("Сохранить", "success", {
     onclick: (e) => {
+
+      console.log(CONTACTS);
       e.preventDefault();
       const elements = document.getElementById("createForm").elements;
-
       const updatedValues = {
         name: elements.name.value,
         surname: elements.surname.value,
         lastName: elements.lastname.value,
         contacts: CONTACTS.map((_, index) => ({
-          type: elements[`contactType${index + 1}`].value,
-          value: elements[`contactValue${index + 1}`].value,
+          type: elements[`contactType${CONTACTS[index].id}`].value,
+          value: elements[`contactValue${CONTACTS[index].id}`].value,
         })),
       };
 
+
       let checkType = false;
+
       if (updatedValues.contacts.length === 0) {
         checkType = true;
       } else {
         updatedValues.contacts.map((el, index) => {
-          const contactIputEl = elements[`contactValue${index + 1}`];
-
+          //const contactIputEl = elements[`contactValue${index}`];
+          const contactIputEl = elements[`contactValue${CONTACTS[index].id}`];
+          //console.log(elements[`contactValue${CONTACTS[index].id}`][0]);
           contactIputEl.addEventListener("input", (e) => {
             if (contactIputEl.value.length > 0) {
               contactIputEl.classList.remove("invalid-field");
@@ -272,8 +276,8 @@ export default function CreateModalWindow(visibility, type, data = {}) {
 
             checkType = false;
           }
+
         });
-        CONTACTS.pop();
       }
 
 
@@ -288,9 +292,8 @@ export default function CreateModalWindow(visibility, type, data = {}) {
           renderData
         );
         delModal();
-        CONTACTS.pop();
+        CONTACTS = [];
       }
-      CONTACTS.pop();
     },
     className:
       "save_btn w-[100%] text-white bg-[#00B007] rounded-b-[30px] hover:bg-[#157739] rounded-tl-[0px] rounded-bl-[0px] rounded-tr-[0px] py-3 px-10",
@@ -306,28 +309,31 @@ export default function CreateModalWindow(visibility, type, data = {}) {
   modal.addEventListener("click", (e) => {
     if (e.target.id === "mymodal") {
       delModal();
-      CONTACTS.pop();
+      CONTACTS = [];
     }
   });
 
   if (data.hasOwnProperty("contacts") && data.contacts.length > 0) {
-    const oneClientContacts = data.contacts;
     CONTACTS = [];
+    let i = 0;
     for (let contact of data.contacts) {
-      addContactsArea.append(AddClientContacts(CONTACTS, contact));
-      CONTACTS.push({});
+      CONTACTS.push({ id: `${Date.now()}${i}` });
+      addContactsArea.append(AddClientContacts(CONTACTS, contact, `${Date.now()}${i}`));
+      i++
     }
   }
 
   modalCloseBtn.addEventListener("click", () => {
     delModal();
-    CONTACTS.pop();
+    //CONTACTS.pop();
+    CONTACTS = [];
   });
 
   window.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       delModal();
-      CONTACTS.pop();
+      //CONTACTS.pop();
+      CONTACTS = [];
     }
   });
 
