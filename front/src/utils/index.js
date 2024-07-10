@@ -118,21 +118,7 @@ export function myToggle() {
   return (isActive = !isActive);
 }
 
-export function validateForm() {
-  // Получаем все инпуты в форме
-  const inputs = document.querySelectorAll('input');
 
-  // Перебираем каждый инпут и проверяем на пустоту
-  for (let input of inputs) {
-    if (input.value.trim() === '') {
-      //alert('Заполните все поля');
-      input.classList.add("invalid-field");
-      return false; // Останавливаем отправку формы
-    }
-  }
-
-  return true; // Продолжаем отправку формы
-}
 
 
 export const getElement = (selector) => document.querySelector(selector);

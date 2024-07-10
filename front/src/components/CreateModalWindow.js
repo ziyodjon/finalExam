@@ -3,7 +3,7 @@ import { Button } from "./Button.js";
 import { create } from "../utils/index.js";
 import Input from "./Input.js";
 import { updateData, deleteData, saveData } from "../api/index.js";
-import { renderData, delModal, validateForm } from "../utils/index.js";
+import { renderData, delModal } from "../utils/index.js";
 
 let CONTACTS = [];
 
@@ -167,6 +167,7 @@ export default function CreateModalWindow(visibility, type, data = {}) {
       };
 
 
+
       let checkType = false;
 
       if (formInputValues.contacts.length === 0) {
@@ -182,7 +183,7 @@ export default function CreateModalWindow(visibility, type, data = {}) {
             }
           });
 
-          if (el.value !== "") {
+          if (el.value != "") {
             contactIputEl.classList.remove("invalid-field");
             checkType = checkType && true;
           } else {
