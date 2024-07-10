@@ -169,6 +169,7 @@ export default function CreateModalWindow(visibility, type, data = {}) {
 
 
       let checkType = false;
+      let lastEmpty = true;
 
       if (formInputValues.contacts.length === 0) {
         checkType = true;
@@ -185,10 +186,12 @@ export default function CreateModalWindow(visibility, type, data = {}) {
 
           if (el.value != "") {
             contactIputEl.classList.remove("invalid-field");
-            checkType = checkType && true;
+            checkType = !lastEmpty && true;
+            lastEmpty = false;
           } else {
             contactIputEl.classList.add("invalid-field");
             checkType = false;
+            lastEmpty = true;
           }
         });
 
@@ -251,6 +254,7 @@ export default function CreateModalWindow(visibility, type, data = {}) {
 
 
       let checkType = false;
+      let lastEmpty = true;
 
       if (updatedValues.contacts.length === 0) {
         checkType = true;
@@ -267,11 +271,13 @@ export default function CreateModalWindow(visibility, type, data = {}) {
 
           if (el.value !== "") {
             contactIputEl.classList.remove("invalid-field");
-            checkType = true;
+            checkType = !lastEmpty && true;
+            lastEmpty = false;
           } else {
             contactIputEl.classList.add("invalid-field");
 
             checkType = false;
+            lastEmpty = true;
           }
 
         });
